@@ -5,11 +5,10 @@ from PyQt5.QtCore import pyqtSlot
 from days_counter import *
 import sys
 
-
 class MyWindow(QMainWindow):
 	def __init__(self):
 		super(MyWindow, self).__init__() #calling parent constructor
-		self.setGeometry(50, 50, 600, 300) #(xpos, ypos, width, height)
+		self.setGeometry(50, 50, 600, 350) #(xpos, ypos, width, height)
 		self.setWindowTitle("Days Counter")
 		self.initUI()
 		self.setDefault()
@@ -18,7 +17,7 @@ class MyWindow(QMainWindow):
 	def initUI(self): #all the widgets that goes in the window are initialize here
 		self.welcomeLabel = QtWidgets.QLabel(self)
 		self.welcomeLabel.setText("Welcome to this simple days counter program!")
-		self.welcomeLabel.move(10,10)
+		self.welcomeLabel.move(20, 20)
 
 		self.enterd1 = QLineEdit(self) 
 		self.enterd1.move(30,90)
@@ -34,8 +33,17 @@ class MyWindow(QMainWindow):
 		self.entery2.move(390,150)
 
 		self.button=QPushButton("Count days!", self) #button for setting the parameter values
-		self.button.move(220,200)
+		self.button.move(230,200)
 		self.button.clicked.connect(self.save_param)
+
+		self.dayLabel = QtWidgets.QLabel(self)
+		self.dayLabel.setText("")
+		self.dayLabel.move(10,250)
+
+		self.monthLabel = QtWidgets.QLabel(self)
+		self.monthLabel.setText("")
+		self.monthLabel.move(10,280)
+
 		self.update()
 
 	def setDefault(self):
@@ -54,6 +62,7 @@ class MyWindow(QMainWindow):
 		self.enterd2.adjustSize()
 		self.enterm2.adjustSize()
 		self.entery2.adjustSize()
+		self.dayLabel.adjustSize()
 	
 	def save_param(self):
 		try:
@@ -72,15 +81,14 @@ class MyWindow(QMainWindow):
 			if self.d1>31 or self.d2>31:
 				raise dayRangeError
 			if self.d1>self.daysOfMonths[self.m1-1]:
-				if self.m1!=2: 
+				if self.m1==2 and daysCounter.isLeapYear(self.y1) is True and self.d1==29:
+					pass
+				else: 
 					raise dateDoesNotExistError
-				elif daysCounter.isLeapYear(self.y1) is False:
-					raise dateDoesNotExistError 
-					
 			if self.d2>self.daysOfMonths[self.m2-1]:
-				if self.m2!=2: 
-					raise dateDoesNotExistError
-				elif daysCounter.isLeapYear(self.y2) is False:
+				if self.m2==2 and daysCounter.isLeapYear(self.y2) is True and self.d2==29:
+					pass
+				else: 
 					raise dateDoesNotExistError
 			if self.y2<self.y1:
 				raise dateRangeError
@@ -90,7 +98,12 @@ class MyWindow(QMainWindow):
 				raise dateRangeError
 			
 			days=daysCounter(self.y1,self.m1, self.d1, self.y2, self.m2,  self.d2)
+			self.dayLabel.setText("The total number of days is: {}".format(days.countDays()))
+			self.monthLabel.setText("The total number of complete months is: {}".format(int(days.countDays()/30)))
+			self.dayLabel.adjustSize()
+			self.monthLabel.adjustSize()
 			print(days.countDays())
+			print(int(days.countDays()/30))
 		except emptyBoxError:
 			msg = QMessageBox()
 			msg.setWindowTitle("Input Error")
