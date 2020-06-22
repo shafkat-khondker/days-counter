@@ -17,6 +17,16 @@ A program that counts the total number of days between user adjustable start and
   <li>notifying user if any negative value or 0 is entered</li>
 </ul>
 
+The following images show the GUI and an example of how the program works.
+
+<p align="center">
+  <img src="screenshots/GUI.jpg" alt="GUI"  width="550" height="300" >
+</p>
+<p align="center">
+  <img src="screenshots/days_image.jpg" alt="GUI"  width="550" height="300" >
+</p>
+
+
 # Dependencies:
 pip install pyqt5
 
