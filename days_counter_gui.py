@@ -80,12 +80,12 @@ class MyWindow(QMainWindow):
 			self.d2= int(self.enterd2.text())
 			self.m2= int(self.enterm2.text())
 			self.y2= int(self.entery2.text())
-			#ensures entered values are all positive integers
-			if self.d1 <= 0 or self.m1 <= 0 or self.y1 <= 0 or self.d2 <= 0 or self.m2 <= 0 or self.y2 <= 0:
-				raise ValueError
 			#checks if all entry boxes are filled
 			if self.d1 == None or self.m1 == None or self.y1 == None or self.d2 == None or self.m2 == None or self.y2 == None:
 				raise emptyBoxError 
+			#ensures entered values are all positive integers
+			if self.d1 <= 0 or self.m1 <= 0 or self.y1 <= 0 or self.d2 <= 0 or self.m2 <= 0 or self.y2 <= 0:
+				raise ValueError
 			#checks if month value lies withing 1-12
 			if self.m1>12 or self.m2>12:
 				raise monthRangeError

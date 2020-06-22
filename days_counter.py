@@ -64,7 +64,7 @@ class daysCounter():
 		else:
 			days+=self.daysOfMonths[currentMonth-1]-d1
 			while m2-currentMonth>1:
-				if currentMonth==1 and self.isLeapYear(y1) is True:
+				if currentMonth==1 and self.isLeapYear(y1) is True: #February has an index of 1
 					days+=29
 				else:
 					days+=self.daysOfMonths[currentMonth]
